@@ -63,7 +63,7 @@ func (c *Client) Execute(query string, variables map[string]any) (*graphQLRespon
 	if err != nil {
 		return nil, fmt.Errorf("executing request: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	respBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
