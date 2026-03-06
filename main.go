@@ -9,6 +9,8 @@ import (
 	"github.com/sophotechlabs/terraform-provider-shopify/internal/provider"
 )
 
+//go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name shopify
+
 var version = "dev"
 
 func main() {

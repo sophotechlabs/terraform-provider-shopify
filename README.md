@@ -2,59 +2,64 @@
 
 Terraform provider for managing Shopify store resources via the GraphQL Admin API.
 
-## Features
+## Features (v0.1.0)
 
-- Product management (create, update, delete) with full drift detection
+- Product management (create, update, delete, import)
 - Default variant management (price, SKU, barcode, compare-at price)
-- Environment variable and HCL configuration for credentials
+- Plan/apply workflow with drift detection
+- Environment variable and HCL configuration
 
-## Requirements
-
-- [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
-- [Go](https://golang.org/doc/install) >= 1.22 (to build the provider)
-
-## Usage
+## Quick Start
 
 ```hcl
 terraform {
   required_providers {
     shopify = {
-      source  = "sophotechlabs/shopify"
-      version = "~> 0.1"
+      source = "sophotechlabs/shopify"
     }
   }
 }
 
 provider "shopify" {
-  store_url    = "your-store.myshopify.com"
-  access_token = var.shopify_access_token
+  store_url = "your-store.myshopify.com"
+  # access_token via SHOPIFY_ACCESS_TOKEN env var
 }
 
 resource "shopify_product" "example" {
   title  = "Example Product"
-  handle = "example-product"
   status = "DRAFT"
-
-  price            = "29.99"
-  compare_at_price = "39.99"
-  sku              = "EX-001"
-  barcode          = "1234567890123"
+  price  = "29.99"
 }
 ```
 
 ## Authentication
 
-1. In your Shopify Admin, go to **Settings > Apps and sales channels > Develop apps**
-2. Create an app and configure Admin API scopes:
-   - `write_products`
-   - `read_products`
-3. Install the app and copy the Admin API access token
+The provider requires a Shopify Admin API access token with product scopes.
 
-Set credentials via environment variables or provider config:
+### Creating a Custom App
+
+1. Go to **Shopify Admin** > **Settings** > **Apps and sales channels**
+2. Click **Develop apps** > **Create an app**
+3. Under **Configuration**, set Admin API scopes:
+   - `write_products` — create, update, delete products
+   - `read_products` — read product data
+4. Click **Install app** and copy the **Admin API access token**
+
+### Provider Configuration
+
+The provider accepts configuration via HCL or environment variables:
+
+| HCL Attribute    | Environment Variable       | Required | Description                          |
+|------------------|----------------------------|----------|--------------------------------------|
+| `store_url`      | `SHOPIFY_STORE_URL`        | Yes      | Store URL (e.g. `your-store.myshopify.com`) |
+| `access_token`   | `SHOPIFY_ACCESS_TOKEN`     | Yes      | Admin API access token (`shpat_...`) |
+| `api_version`    | —                          | No       | API version (default: `2025-04`)     |
+
+Environment variables are used as fallbacks when HCL attributes are not set.
 
 ```bash
 export SHOPIFY_STORE_URL="your-store.myshopify.com"
-export SHOPIFY_ACCESS_TOKEN="shpat_xxxxx"
+export SHOPIFY_ACCESS_TOKEN="shpat_xxxxxxxxxxxxxxxxxxxxx"
 ```
 
 ## Resources
@@ -63,55 +68,91 @@ export SHOPIFY_ACCESS_TOKEN="shpat_xxxxx"
 
 Manages a Shopify product and its default variant.
 
-#### Arguments
+```hcl
+resource "shopify_product" "ring" {
+  title            = "Silver Ring"
+  handle           = "silver-ring"
+  status           = "ACTIVE"
+  vendor           = "My Brand"
+  product_type     = "Jewelry"
+  description_html = "<p>A beautiful silver ring.</p>"
+  tags             = ["jewelry", "silver", "ring"]
 
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| `title` | string | yes | Product title |
-| `status` | string | yes | ACTIVE, DRAFT, or ARCHIVED |
-| `handle` | string | no | URL-friendly handle (auto-generated from title if omitted) |
-| `vendor` | string | no | Product vendor |
-| `product_type` | string | no | Product type |
-| `description_html` | string | no | Product description in HTML |
-| `tags` | list(string) | no | Product tags |
-| `price` | string | no | Default variant price |
-| `compare_at_price` | string | no | Default variant compare-at price |
-| `sku` | string | no | Default variant SKU |
-| `barcode` | string | no | Default variant barcode |
+  price            = "49.99"
+  compare_at_price = "59.99"
+  sku              = "RING-001"
+  barcode          = "1234567890123"
+}
+```
 
-#### Attributes
+#### Argument Reference
 
-| Name | Description |
-|------|-------------|
-| `id` | Shopify product GID |
-| `default_variant_id` | Default variant GID |
+| Attribute          | Type         | Required | Description                                    |
+|--------------------|--------------|----------|------------------------------------------------|
+| `title`            | string       | Yes      | Product title                                  |
+| `status`           | string       | Yes      | `ACTIVE`, `DRAFT`, or `ARCHIVED`               |
+| `handle`           | string       | No       | URL-friendly handle (auto-generated from title) |
+| `vendor`           | string       | No       | Product vendor                                 |
+| `product_type`     | string       | No       | Product type                                   |
+| `description_html` | string       | No       | Product description in HTML                    |
+| `tags`             | list(string) | No       | Product tags                                   |
+| `price`            | string       | No       | Default variant price                          |
+| `compare_at_price` | string       | No       | Default variant compare-at price               |
+| `sku`              | string       | No       | Default variant SKU                            |
+| `barcode`          | string       | No       | Default variant barcode (EAN-13)               |
+
+#### Attribute Reference
+
+| Attribute            | Description                      |
+|----------------------|----------------------------------|
+| `id`                 | Shopify product GID              |
+| `default_variant_id` | GID of the default variant       |
+
+#### Import
+
+Import existing products using their Shopify GID:
+
+```bash
+terraform import shopify_product.ring gid://shopify/Product/123456789
+```
 
 ## Development
 
+### Building from Source
+
 ```bash
-# Build
-go build ./...
-
-# Install locally
-go install .
-
-# Run tests
-go test ./... -v
+git clone https://github.com/sophotechlabs/terraform-provider-shopify.git
+cd terraform-provider-shopify
+go build -o terraform-provider-shopify
 ```
 
-### Local testing with dev_overrides
+### Local Development with dev_overrides
 
-Add to `~/.terraformrc`:
+Add to your `~/.terraformrc`:
 
 ```hcl
 provider_installation {
   dev_overrides {
-    "registry.terraform.io/sophotechlabs/shopify" = "/path/to/go/bin"
+    "sophotechlabs/shopify" = "/path/to/terraform-provider-shopify"
   }
   direct {}
 }
 ```
 
+Then run `terraform plan` / `terraform apply` without `terraform init`.
+
+### Running Tests
+
+```bash
+go test ./...
+```
+
+### Generating Documentation
+
+```bash
+go generate ./...
+```
+
 ## License
 
-MPL-2.0
+[Apache-2.0](LICENSE)
