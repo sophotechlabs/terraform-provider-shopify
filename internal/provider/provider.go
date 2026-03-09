@@ -14,7 +14,8 @@ import (
 var _ provider.Provider = &ShopifyProvider{}
 
 type ShopifyProvider struct {
-	version string
+	version      string
+	mockEndpoint string // Used in tests to override the API endpoint.
 }
 
 type ShopifyProviderModel struct {
@@ -93,6 +94,9 @@ func (p *ShopifyProvider) Configure(ctx context.Context, req provider.ConfigureR
 	}
 
 	client := NewClient(storeURL, accessToken, apiVersion)
+	if p.mockEndpoint != "" {
+		client.Endpoint = p.mockEndpoint
+	}
 	resp.DataSourceData = client
 	resp.ResourceData = client
 }
