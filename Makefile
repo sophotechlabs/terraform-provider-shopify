@@ -49,17 +49,15 @@ docs:
 ci: vet fmtcheck test
 
 release:
-	@LATEST=$$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0"); \
-	MAJOR=$$(echo $$LATEST | sed 's/^v//' | cut -d. -f1); \
-	MINOR=$$(echo $$LATEST | sed 's/^v//' | cut -d. -f2); \
-	PATCH=$$(echo $$LATEST | sed 's/^v//' | cut -d. -f3); \
+	@LATEST=$$(gh release list --limit 1 --json tagName --jq '.[0].tagName' 2>/dev/null | sed 's/^v//'); \
+	if [ -z "$$LATEST" ]; then LATEST="0.0.0"; fi; \
+	IFS='.' read -r MAJOR MINOR PATCH <<< "$$LATEST"; \
 	case "$(BUMP)" in \
-		major) MAJOR=$$((MAJOR + 1)); MINOR=0; PATCH=0 ;; \
-		minor) MINOR=$$((MINOR + 1)); PATCH=0 ;; \
-		patch) PATCH=$$((PATCH + 1)) ;; \
+		patch) PATCH=$$((PATCH + 1));; \
+		minor) MINOR=$$((MINOR + 1)); PATCH=0;; \
+		major) MAJOR=$$((MAJOR + 1)); MINOR=0; PATCH=0;; \
+		*) echo "ERROR: BUMP must be patch, minor, or major"; exit 1;; \
 	esac; \
-	VERSION="v$$MAJOR.$$MINOR.$$PATCH"; \
-	echo "$$LATEST → $$VERSION ($(BUMP) bump)"; \
-	echo "Press Enter to tag and push, or Ctrl+C to abort"; \
-	read _confirm; \
-	git tag "$$VERSION" && git push origin "$$VERSION"
+	VERSION="$$MAJOR.$$MINOR.$$PATCH"; \
+	echo "Latest: v$$LATEST → Next: v$$VERSION ($(BUMP) bump)"; \
+	gh workflow run release.yml -f version=$$VERSION
