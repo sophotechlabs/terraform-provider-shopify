@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.2] - 2026-03-16
+
+### Miscellaneous
+
+- Bump the minor-patch group with 3 updates (#8) *(deps)*
 ## [0.0.1] - 2026-03-09
 
 ### Bug Fixes
