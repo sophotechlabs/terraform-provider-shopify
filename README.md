@@ -1,5 +1,6 @@
 # terraform-provider-shopify
 
+[![Terraform Registry](https://img.shields.io/badge/terraform-registry-purple.svg)](https://registry.terraform.io/providers/sophotechlabs/shopify/latest)
 [![CI](https://github.com/sophotechlabs/terraform-provider-shopify/actions/workflows/ci.yml/badge.svg)](https://github.com/sophotechlabs/terraform-provider-shopify/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/sophotechlabs/terraform-provider-shopify/branch/main/graph/badge.svg)](https://codecov.io/gh/sophotechlabs/terraform-provider-shopify)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/sophotechlabs/terraform-provider-shopify/badge)](https://scorecard.dev/viewer/?uri=github.com/sophotechlabs/terraform-provider-shopify)
