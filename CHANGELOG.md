@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.4] - 2026-03-16
+
+### Miscellaneous
+
+- Bump actions/setup-go from 5.5.0 to 6.3.0 (#10) *(deps)*
 ## [0.0.3] - 2026-03-16
 
 ### Miscellaneous
