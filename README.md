@@ -7,6 +7,8 @@
 [![Go](https://img.shields.io/badge/go-1.24-blue.svg)](https://go.dev/)
 [![Terraform](https://img.shields.io/badge/terraform-%3E%3D1.0-purple.svg)](https://www.terraform.io/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sophotechlabs/terraform-provider-shopify)](https://goreportcard.com/report/github.com/sophotechlabs/terraform-provider-shopify)
+[![Go Reference](https://pkg.go.dev/badge/github.com/sophotechlabs/terraform-provider-shopify.svg)](https://pkg.go.dev/github.com/sophotechlabs/terraform-provider-shopify)
 
 Terraform provider for managing Shopify store resources via the GraphQL Admin API.
 
