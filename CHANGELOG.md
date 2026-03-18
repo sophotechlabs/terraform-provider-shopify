@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.0.4] - 2026-03-16
+
+### Miscellaneous
+
+- Bump actions/setup-go from 5.5.0 to 6.3.0 (#10) *(deps)*
+## [0.0.3] - 2026-03-16
+
+### Miscellaneous
+
+- Bump the minor-patch group with 6 updates (#9) *(deps)*
+## [0.0.2] - 2026-03-16
+
+### Miscellaneous
+
+- Bump the minor-patch group with 3 updates (#8) *(deps)*
 ## [0.0.1] - 2026-03-09
 
 ### Bug Fixes

@@ -1,11 +1,14 @@
 # terraform-provider-shopify
 
+[![Terraform Registry](https://img.shields.io/badge/terraform-registry-purple.svg)](https://registry.terraform.io/providers/sophotechlabs/shopify/latest)
 [![CI](https://github.com/sophotechlabs/terraform-provider-shopify/actions/workflows/ci.yml/badge.svg)](https://github.com/sophotechlabs/terraform-provider-shopify/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/sophotechlabs/terraform-provider-shopify/branch/main/graph/badge.svg)](https://codecov.io/gh/sophotechlabs/terraform-provider-shopify)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/sophotechlabs/terraform-provider-shopify/badge)](https://scorecard.dev/viewer/?uri=github.com/sophotechlabs/terraform-provider-shopify)
 [![Go](https://img.shields.io/badge/go-1.24-blue.svg)](https://go.dev/)
 [![Terraform](https://img.shields.io/badge/terraform-%3E%3D1.0-purple.svg)](https://www.terraform.io/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sophotechlabs/terraform-provider-shopify)](https://goreportcard.com/report/github.com/sophotechlabs/terraform-provider-shopify)
+[![Go Reference](https://pkg.go.dev/badge/github.com/sophotechlabs/terraform-provider-shopify.svg)](https://pkg.go.dev/github.com/sophotechlabs/terraform-provider-shopify)
 
 Terraform provider for managing Shopify store resources via the GraphQL Admin API.
 
