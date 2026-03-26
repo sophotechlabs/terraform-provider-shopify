@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.6] - 2026-03-26
+
+### Miscellaneous
+
+- Bump google.golang.org/grpc from 1.79.2 to 1.79.3 (#15) *(deps)*
 ## [0.0.5] - 2026-03-26
 
 ### Miscellaneous
