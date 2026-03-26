@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.5] - 2026-03-26
+
+### Miscellaneous
+
+- Bump wagoid/commitlint-github-action (#11) *(deps)*
 ## [0.0.4] - 2026-03-16
 
 ### Miscellaneous
