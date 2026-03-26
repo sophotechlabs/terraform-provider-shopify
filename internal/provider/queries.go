@@ -108,3 +108,90 @@ query product($id: ID!) {
   }
 }
 `
+
+const queryCollectionCreate = `
+mutation collectionCreate($input: CollectionInput!) {
+  collectionCreate(input: $input) {
+    collection {
+      id
+      title
+      handle
+      descriptionHtml
+      sortOrder
+      templateSuffix
+      ruleSet {
+        appliedDisjunctively
+        rules {
+          column
+          condition
+          relation
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`
+
+const queryCollectionUpdate = `
+mutation collectionUpdate($input: CollectionInput!) {
+  collectionUpdate(input: $input) {
+    collection {
+      id
+      title
+      handle
+      descriptionHtml
+      sortOrder
+      templateSuffix
+      ruleSet {
+        appliedDisjunctively
+        rules {
+          column
+          condition
+          relation
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`
+
+const queryCollectionDelete = `
+mutation collectionDelete($input: CollectionDeleteInput!) {
+  collectionDelete(input: $input) {
+    deletedCollectionId
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`
+
+const queryCollectionRead = `
+query collection($id: ID!) {
+  collection(id: $id) {
+    id
+    title
+    handle
+    descriptionHtml
+    sortOrder
+    templateSuffix
+    ruleSet {
+      appliedDisjunctively
+      rules {
+        column
+        condition
+        relation
+      }
+    }
+  }
+}
+`

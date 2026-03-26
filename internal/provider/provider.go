@@ -104,6 +104,7 @@ func (p *ShopifyProvider) Configure(ctx context.Context, req provider.ConfigureR
 func (p *ShopifyProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewProductResource,
+		NewCollectionResource,
 	}
 }
 

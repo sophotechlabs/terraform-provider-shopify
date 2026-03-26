@@ -125,13 +125,18 @@ func TestShopifyProvider_Resources(t *testing.T) {
 	p := &ShopifyProvider{}
 	resources := p.Resources(context.Background())
 
-	if len(resources) != 1 {
-		t.Fatalf("len(Resources) = %d, want 1", len(resources))
+	if len(resources) != 2 {
+		t.Fatalf("len(Resources) = %d, want 2", len(resources))
 	}
 
 	r := resources[0]()
 	if _, ok := r.(*ProductResource); !ok {
 		t.Error("first resource should be *ProductResource")
+	}
+
+	r = resources[1]()
+	if _, ok := r.(*CollectionResource); !ok {
+		t.Error("second resource should be *CollectionResource")
 	}
 }
 
